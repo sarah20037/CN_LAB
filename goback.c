@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<unistd.h>
 int simu()
 {
     return rand()%10 < 7;
@@ -14,7 +15,7 @@ void main()
     scanf("%d",&w);
 
     int done=1,k=1;
-    while(done<n)
+    while(done<=n)
     {
         printf("\n\nSENDING WINDOW\n");
         for(int i=0;i<w && done<=n;i++)
@@ -32,11 +33,13 @@ void main()
                 printf("\nAcknowledgement %d received",done);
                 done++;
                 k=done;
+                sleep(1);
                } 
             else
             {
                 printf("\nAcknowledgement %d lost",k);
                 printf("\nRetransmitting from %d",k);
+                sleep(1);
                 break;
             }
         }
