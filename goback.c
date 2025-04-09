@@ -1,47 +1,45 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-
-int tf, tt = 0, N, i = 1;
-
-void transmission()
+#include<stdio.h>
+#include<stdlib.h>
+int simu()
 {
+    return rand()%10 < 7;
+}
+void main()
+{
+    int n,w;
+    printf("Enter the number of processes:");
+    scanf("%d",&n);
 
-    while (i <= tf)
+    printf("Enter window size:");
+    scanf("%d",&w);
+
+    int done=1,k=1;
+    while(done<n)
     {
-        int z = 0;
-
-        for (int k = i; k < i + N && k <= tf; k++)
+        printf("\n\nSENDING WINDOW\n");
+        for(int i=0;i<w && done<=n;i++)
         {
-            printf("Sending frame %d \n", k);
-            tt++;
+            printf("\nSending frame %d",k);
+            k++;
         }
-
-        for (int k = i; k < i + N && k <= tf; k++)
+        printf("\n\nACKNOWLEDGEMENTS");
+        for(int i=0;i<w && done<=n;i++)
         {
-            int f = rand() % 2;
-
-            if (!f)
-            {
-                printf("Frame %d sent succesfully,ack received \n", k);
-                z++;
-            }
-
+            
+            int x=simu();
+            if(x)
+               {
+                printf("\nAcknowledgement %d received",done);
+                done++;
+                k=done;
+               } 
             else
             {
-                printf("frame lost %d !! \n", k);
-                printf("Retransmitting frame %d ", k);
+                printf("\nAcknowledgement %d lost",k);
+                printf("\nRetransmitting from %d",k);
                 break;
             }
         }
-        printf("\n");
-        i = i + z;
+       
     }
-}
-
-void main()
-{
-    tf = 5;
-    N = 3;
-    transmission();
 }
