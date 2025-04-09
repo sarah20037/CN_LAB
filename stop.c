@@ -1,43 +1,29 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <unistd.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
 
-#define TIMEOUT 3
-#define TOTAL_PACKETS 5
-
-int simulate_acknowledgement()
+int simu()
 {
-    return rand() % 10 < 7;
+    return rand()%10 <7;
 }
-
-int main()
+void main()
 {
-    srand(time(0));
+    int n;
+    printf("Enter the number of processes:");
+    scanf("%d",&n);
 
-    int packet = 1;
-    int ack_received;
-
-    while (packet <= TOTAL_PACKETS)
+    int k=1;
+    while(k<=n)
     {
-        printf("Sending packet %d....\n", packet);
-
-        sleep(1);
-        ack_received = simulate_acknowledgement();
-
-        if (ack_received)
+        printf("\nSending packet %d",k);
+        if(simu())
         {
-            printf("Ack for packet %d received \n", packet);
-            packet++;
+            printf("\nAcknowledgement for packet %d received",k);
+            k++;
         }
-
         else
         {
-            printf("ACK for packet %d lost...Retransmitting \n", packet);
-            sleep(TIMEOUT);
-        }
+            printf("\nAchnowledgement for packet %d lost",k);
+        } 
     }
-
-    printf("All packet sent succesfully");
-    return 0;
 }
